@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "clarity-minds"
+version = "0.1.0"
+description = ""
+authors = ["Gabriel Freitas <gabrielfreitas07@gmail.com>"]
+readme = "README.md"
+packages = [{include = "clarity_minds"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+django = "^4.2.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
