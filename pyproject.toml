@@ -10,6 +10,7 @@ packages = [{include = "clarity_minds"}]
 python = "^3.8"
 django = "^4.2.5"
 prettyconf = "^2.2.1"
+djangorestframework = "^3.14.0"
 
 
 [build-system]

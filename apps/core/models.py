@@ -38,6 +38,7 @@ class DefaultModel(models.Model):
 
 class Teacher(DefaultModel):
     name = models.CharField("Nome", max_length=255)
+    user = models.OneToOneField("users.User", on_delete=models.CASCADE)
     # discipline = models.ManyToManyField(
     #     Discipline, verbose_name="Disciplinas", related_name="teachers"
     # )
