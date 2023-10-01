@@ -70,6 +70,20 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "prettyconf"
+version = "2.2.1"
+description = "Separation of settings from code."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "prettyconf-2.2.1.tar.gz", hash = "sha256:2478d16bc2596c9863e93dd182ca70b71f636f0e169ab23288906c53147cfdbc"},
+]
+
+[package.extras]
+aws = ["boto3"]
+
+[[package]]
 name = "sqlparse"
 version = "0.4.4"
 description = "A non-validating SQL parser."
@@ -113,4 +127,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "ff89c102c066d030c538243c3af9baf6ff961a4bb8cb4aa537d4d3a909a526cd"
+content-hash = "94807837a23dc8725bc70fe1f660a5fbe2276dc77699209ec6ac688938f795c1"
