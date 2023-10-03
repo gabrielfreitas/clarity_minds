@@ -6,6 +6,7 @@ __pycache__/
 scripts-sustentacao/
 scripts_sustentacao/
 *.bak
+./requirements.txt
 
 # C extensions
 *.so
