@@ -2,6 +2,16 @@ from django.db import models
 
 from apps.core.models import DefaultModel
 
+EMOJI_CHOICES = (
+    ("😃", "😃 - Feliz"),
+    ("😊", "😊 - Legal"),
+    ("😐", "😐 - Normal/Neutro"),
+    ("😥", "😥 - Preocupado"),
+    ("😞", "😞 - Chateado"),
+    ("😫", "😫 - Triste"),
+    ("😵", "😵 - Cansado"),
+    ("😡", "😡 - Raiva"),
+)
 
 class Feedback(DefaultModel):
     student = models.ForeignKey(
@@ -10,7 +20,7 @@ class Feedback(DefaultModel):
         related_name="feedbacks",
         verbose_name="Aluno",
     )
-    emoji = models.CharField("Emoji", max_length=255)
+    emoji = models.CharField("Emoji", choices=EMOJI_CHOICES, max_length=255)
     message = models.TextField("Mensagem")
 
     def __str__(self):
