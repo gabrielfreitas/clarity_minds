@@ -1,9 +1,12 @@
 {% extends 'base.html' %} 
+
 {% block nav %}<a href="/">Voltar</a>{% endblock %} 
+
 {%block content %}
-<form class="form">
+<form class="form" method="post">
+  {% csrf_token %}
   <div class="form-elements">
-    <div class="form-group">
+    {% comment %} <div class="form-group">
       <p style="margin: 0 0 0.5rem 0">Seu email *</p>
       <input
         type="email"
@@ -21,7 +24,14 @@
         class="form-control"
         label="Seu comentário"
       />
-    </div>
+    </div> {% endcomment %}
+    {% for field in form %}
+	    		{{ field.label_tag }} 
+	        	{{ field }}
+	        	{% if field.errors %}
+	        		<small>{{ field.errors|striptags }}</small> 
+	        	{% endif %}
+		{% endfor %}
 
     <button type="submit" class="btn btn-primary">Entrar</button>
   </div>
