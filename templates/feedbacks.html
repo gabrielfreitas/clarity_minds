@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block nav %}<a href="/">Voltar</a>{% endblock%} 
+{%block content %}
+<div
+  style="
+    height: 70vh;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  "
+>
+  <h5>Feedbacks</h5>
+  {% for obj in object_list %}
+    <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">{{ obj.get_emoji_display }}</h5>
+        <p class="card-text">Total: {{ obj.total }}</p>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,11 +1,12 @@
 from datetime import datetime, timedelta
+from django.db.models import Count
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from .models import Feedback
-from apps.core.models import Student
+from apps.core.models import Student, Teacher
 
 
 class FeedbackCreateView(CreateView):
@@ -43,15 +44,29 @@ class FeedbackCreateView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-# class FeedbackListAPIView(generics.ListAPIView):
-#     serializer_class = FeedbackSerializer
-#     permission_classes = [IsAuthenticated]
+class FeedbackListView(ListView):
+    model = Feedback
+    template_name = "feedbacks.html"
 
-#     def get_queryset(self):
-#         start_date_param = self.request.query_params.get("start_date")
-#         if start_date_param:
-#             start_date = datetime.strptime(start_date_param, "%Y-%m-%d")
-#         return Feedback.objects.filter(
-#             student__school_class__teachers=self.request.user,
-#             created_at__date=start_date,
-#         )
+    def get_queryset(self):
+        start_date_param = self.request.GET.get("start_date")
+        if start_date_param:
+            start_date = datetime.strptime(start_date_param, "%Y-%m-%d")
+        else:
+            start_date = datetime.now().date() - timedelta(days=1)
+        try:
+            teacher = Teacher.objects.get(user=self.request.user)
+        except Teacher.DoesNotExist:
+            return render(
+                self.request,
+                "feedback-error.html",
+                {"message": "Professor não encontrado!"},
+            )
+        return (
+            Feedback.objects.filter(
+                student__school_class__teachers=teacher,
+                created_at__date=start_date,
+            )
+            .annotate(total=Count("emoji"))
+            .order_by("-total")
+        )

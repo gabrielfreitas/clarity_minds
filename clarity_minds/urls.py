@@ -18,10 +18,11 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
 from . import views
-from apps.feedback.views import FeedbackCreateView
+from apps.feedback.views import FeedbackCreateView, FeedbackListView
 
 urlpatterns = [
     path("", FeedbackCreateView.as_view(), name="home"),
+    path("feedbacks/", FeedbackListView.as_view(), name="feedbacks"),
     path("admin/", admin.site.urls),
     path("", include("apps.users.urls")),
     path("api/", include("apps.feedback.urls")),
