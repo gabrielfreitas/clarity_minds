@@ -10,10 +10,14 @@
 
 body {
   background-color: #050b2f;
+  margin-top: 120px;
 }
 
 header {
-  width: 100%;
+  position: fixed;
+  top: 0;
+  width: 100% !important;
+  background-color: #050b2f;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -56,7 +60,13 @@ footer {
   width: 100%;
   text-align: center;
   position: fixed;
+  background-color: red;
   bottom: 0;
+}
+
+.card-container{
+  width: 100% !important;
+  color: red !important;
 }
 
 @media (min-width: 720px) {

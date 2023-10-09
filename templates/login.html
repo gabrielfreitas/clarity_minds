@@ -6,33 +6,26 @@
 <form class="form" method="post">
   {% csrf_token %}
   <div class="form-elements">
-    {% comment %} <div class="form-group">
+   <div class="form-group">
       <p style="margin: 0 0 0.5rem 0">Seu email *</p>
       <input
         type="email"
+        name="username"
         required
         class="form-control"
         label="Seu comentário"
       />
     </div>
-
     <div class="form-group">
       <p style="margin: 0 0 0.5rem 0">Sua senha *</p>
       <input
         type="password"
+        name="password"
         required
         class="form-control"
         label="Seu comentário"
       />
-    </div> {% endcomment %}
-    {% for field in form %}
-	    		{{ field.label_tag }} 
-	        	{{ field }}
-	        	{% if field.errors %}
-	        		<small>{{ field.errors|striptags }}</small> 
-	        	{% endif %}
-		{% endfor %}
-
+    </div>
     <button type="submit" class="btn btn-primary">Entrar</button>
   </div>
 </form>

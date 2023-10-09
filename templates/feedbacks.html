@@ -1,21 +1,72 @@
-{% extends 'base.html' %} {% block nav %}<a href="/">Voltar</a>{% endblock%} 
+{% extends 'base.html' %} {% block nav %}Olá {{ request.user.first_name }}!<a href="/">Voltar</a>{% endblock%} 
 {%block content %}
-<div
-  style="
-    height: 70vh;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  "
->
+<div style="padding: 1rem; width: 100%; color: #fff">
+  <div class="feedbacks" style="width: 100%; padding: 1rem; background-color: #fff; border-radius: 10px; margin-bottom: 1rem;">
+    <div>
+      <canvas id="feedbacks"></canvas>
+    </div>
+  </div>
   <h5>Feedbacks</h5>
   {% for obj in object_list %}
-    <div class="card">
-        <div class="card-body">
-        <h5 class="card-title">{{ obj.get_emoji_display }}</h5>
-        <p class="card-text">Total: {{ obj.total }}</p>
+    <div class="card" style="width: 100%; margin-bottom: 1rem">
+      <div class="card-header">
+        {{ obj.get_emoji_display }}
+      </div>
+      <div class="card-body">
+        <blockquote class="blockquote mb-0">
+          <p>{{ obj.message }}</p>
+          <p style="font-size: 0.8rem;">{{ obj.created_at }}</p>
+        </blockquote>
+      </div>
     </div>
   {% endfor %}
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const feedbacks = document.querySelectorAll('.card-header')
+  const labels = []
+  const itens = []
+  for (let i = 0; i < feedbacks.length; i++) {
+    const exist = labels.some((item) => item === feedbacks[i].textContent)
+    !exist && labels.push(feedbacks[i].textContent);
+    itens.push(feedbacks[i].textContent);
+  }
+  function countElements(array) {
+    const count = {}; 
+    for (const element of array) {
+      if (count[element]) {
+        count[element]++;
+      } else {
+        count[element] = 1;
+      }
+    }
+    return count;
+  }
+  const result = countElements(itens);
+  const qtdLabels = []
+  for (const element in result) {
+    qtdLabels.push(result[element])
+  }
+  const dataFeedbacks = {
+    labels: labels,
+    datasets: [{
+      label: 'Feedbacks do dia',
+      backgroundColor: '#87CEEB',
+      borderColor: 'rgb(255, 99, 132)',
+      data: qtdLabels,
+    }]
+  };
+  const configFeedbacks = {
+    type: 'bar',
+    data: dataFeedbacks,
+    options: {
+      indexAxis: 'y',
+    }
+  };
+  new Chart(
+    document.getElementById('feedbacks'),
+    configFeedbacks
+  );
+</script>
+
 {% endblock %}
