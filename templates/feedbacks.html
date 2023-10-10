@@ -7,11 +7,7 @@
     align-items: top;
   }
 
-  .graphic {
-    width: 49%;
-  }
-
-  .comments {
+  .graphic, .comments, .form-date {
     width: 49%;
   }
 
@@ -21,37 +17,51 @@
       align-items: center;
     }
 
-    .graphic {
-      width: 100%;
+    .graphic, .comments, .form-date {
+      width: 100% !important;
     }
 
-    .comments {
-      width: 100%;
+    .form-date {
+      padding: 1rem !important;
     }
   }
 </style>
-<div class="feedbacks-container" style="padding: 1rem; width: 100%; color: #fff">
-  <div class="graphic">
-    <h5>Gráfico de feedbacks</h5>
-    <div style="background-color: #fff; border-radius: 10px; margin-bottom: 1rem;">
-      <canvas id="feedbacks"></canvas>
-    </div>
-  </div>
-  <div class="comments">
-    <h5>Lista de feedbacks</h5>
-    {% for obj in object_list %}
-      <div class="card" style="width: 100%; margin-bottom: 1rem">
-        <div class="card-header">
-          {{ obj.get_emoji_display }}
-        </div>
-        <div class="card-body">
-          <blockquote class="blockquote mb-0">
-            <p>{{ obj.message }}</p>
-            <p style="font-size: 0.8rem;">{{ obj.created_at }}</p>
-          </blockquote>
-        </div>
+
+<div style="width: 100%; ">
+  <form class="form-date" style="padding: 1rem 0 1rem 1rem; color: #fff; display: flex; justify-content: space-between;" method="get">
+      <input
+        type="date"
+        name="start_date"
+        required
+        class="form-control"
+        label="Data"
+      />
+      <button style="margin-left: 1rem;" type="submit" class="btn btn-primary">Filtrar</button>
+  </form>
+  <div class="feedbacks-container" style="padding: 1rem; width: 100%; color: #fff">
+    <div class="graphic">
+      <h5>Gráfico de feedbacks</h5>
+      <div style="background-color: #fff; border-radius: 10px; margin-bottom: 1rem;">
+        <canvas id="feedbacks"></canvas>
       </div>
-    {% endfor %}
+    </div>
+    <div class="comments">
+      <h5>Lista de feedbacks</h5>
+      {% for obj in object_list %}
+        <div class="card" style="width: 100%; margin-bottom: 1rem">
+          <div class="card-header">
+            {{ obj.get_emoji_display }}
+          </div>
+          <div class="card-body">
+            <blockquote class="blockquote mb-0">
+              <p>{{ obj.message }}</p>
+              <p style="font-size: 0.8rem;">{{ obj.created_at }}</p>
+            </blockquote>
+          </div>
+        </div>
+      {% endfor %}
+      {% if not object_list %} Nenhum feedback encontrado {% endif %}
+    </div>
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
