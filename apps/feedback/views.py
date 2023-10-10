@@ -12,7 +12,7 @@ from apps.core.models import Student, Teacher
 class FeedbackCreateView(CreateView):
     model = Feedback
     fields = ["student", "emoji", "message"]
-    success_url = reverse_lazy("thank-you")
+    #success_url = reverse_lazy("thank-you")
     template_name = "home.html"
 
     def post(self, request, *args, **kwargs):
@@ -41,7 +41,7 @@ class FeedbackCreateView(CreateView):
             emoji=request.POST.get("emoji"),
             message=request.POST.get("message"),
         )
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(reverse_lazy("thank-you"))
 
 
 class FeedbackListView(ListView):
@@ -53,7 +53,8 @@ class FeedbackListView(ListView):
         if start_date_param:
             start_date = datetime.strptime(start_date_param, "%Y-%m-%d")
         else:
-            start_date = datetime.now().date() - timedelta(days=1)
+            #start_date = datetime.now().date() - timedelta(days=1)
+            start_date = datetime.now().date()
         try:
             teacher = Teacher.objects.get(user=self.request.user)
         except Teacher.DoesNotExist:

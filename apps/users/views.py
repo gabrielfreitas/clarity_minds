@@ -9,7 +9,7 @@ class MyLoginView(LoginView):
 
     def get_success_url(self):
         # return reverse_lazy("feedbacks-list")
-        return reverse_lazy("home")
+        return reverse_lazy("feedbacks")
 
     def form_invalid(self, form):
         messages.error(self.request, "Usuário ou senha inválidos")
