@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from django.db.models import Count
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -12,7 +12,7 @@ from apps.core.models import Student, Teacher
 class FeedbackCreateView(CreateView):
     model = Feedback
     fields = ["student", "emoji", "message"]
-    #success_url = reverse_lazy("thank-you")
+    # success_url = reverse_lazy("thank-you")
     template_name = "home.html"
 
     def post(self, request, *args, **kwargs):
@@ -47,14 +47,14 @@ class FeedbackCreateView(CreateView):
 class FeedbackListView(ListView):
     model = Feedback
     template_name = "feedbacks.html"
+    start_date = None
 
     def get_queryset(self):
         start_date_param = self.request.GET.get("start_date")
         if start_date_param:
-            start_date = datetime.strptime(start_date_param, "%Y-%m-%d")
+            self.start_date = datetime.strptime(start_date_param, "%Y-%m-%d")
         else:
-            #start_date = datetime.now().date() - timedelta(days=1)
-            start_date = datetime.now().date()
+            self.start_date = datetime.now().date()
         try:
             teacher = Teacher.objects.get(user=self.request.user)
         except Teacher.DoesNotExist:
@@ -66,8 +66,13 @@ class FeedbackListView(ListView):
         return (
             Feedback.objects.filter(
                 student__school_class__teachers=teacher,
-                created_at__date=start_date,
+                created_at__date=self.start_date,
             )
             .annotate(total=Count("emoji"))
             .order_by("-total")
         )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["start_date"] = self.start_date
+        return context
