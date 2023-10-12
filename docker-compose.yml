@@ -1,7 +1,7 @@
 version: "3.7"
 services:
-  web:
-    container_name: web
+  clarity_web:
+    container_name: clarity_web
     restart: always
     build:
       context: .
@@ -12,7 +12,7 @@ services:
       - SECRET_KEY=$SECRET_KEY
       - DB_URL=$DB_URL
     ports:
-      - "8000:8000"
+      - "8002:8002"
     volumes:
       - ./static/:/app/clarity_minds/static/
       - ./media/:/app/clarity_minds/media/
