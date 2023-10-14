@@ -26,7 +26,7 @@ from apps.feedback.views import (
 
 urlpatterns = [
     path("", FeedbackCreateView.as_view(), name="home"),
-    path("schools-classes/", SchoolClassListView.as_view(), name="schools-classes"),
+    path("turmas/", SchoolClassListView.as_view(), name="schools-classes"),
     path("feedbacks/<int:pk>/", FeedbackListView.as_view(), name="feedback-detail"),
     path("admin/", admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),

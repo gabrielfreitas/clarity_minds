@@ -1,7 +1,7 @@
 {% extends 'base.html' %} 
 {% block nav %}
 Olá {{ request.user.first_name }}!
-<a href="/"><button type="button" class="btn btn-primary">Voltar</button>
+<a href="{% url 'schools-classes' %}"><button type="button" class="btn btn-primary">Voltar</button>
 </a>{% endblock%} 
 {%block content %}
 <style>
@@ -54,7 +54,7 @@ Olá {{ request.user.first_name }}!
       {% for obj in object_list %}
         <div class="card" style="width: 100%; margin-bottom: 1rem">
           <div class="card-header">
-            {{ obj.get_emoji_display }}
+            {{ obj.get_emoji_display }} - por {% if obj.is_anonymous %}Anônimo{% else %}{{ obj.student.name }}{% endif %}
           </div>
           <div class="card-body">
             <blockquote class="blockquote mb-0">
