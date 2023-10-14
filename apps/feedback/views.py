@@ -11,7 +11,7 @@ from apps.core.models import SchoolClass, Student, Teacher
 
 class FeedbackCreateView(CreateView):
     model = Feedback
-    fields = ["student", "emoji", "message"]
+    fields = ["student", "emoji", "message", "is_anonymous"]
     # success_url = reverse_lazy("thank-you")
     template_name = "home.html"
 
@@ -26,11 +26,11 @@ class FeedbackCreateView(CreateView):
                 email=student_email,
                 school_class=school_class,
             )
-            return render(
-                request,
-                "feedback-error.html",
-                {"message": "Aluno não encontrado!"},
-            )
+            # return render(
+            #     request,
+            #     "feedback-error.html",
+            #     {"message": "Aluno não encontrado!"},
+            # )
 
         feedback = Feedback.objects.filter(
             student=student,
@@ -42,10 +42,12 @@ class FeedbackCreateView(CreateView):
                 "feedback-error.html",
                 {"message": "Você já enviou um feedback hoje!"},
             )
+        is_anonymous = True if request.POST.get("is_anonymous") else False
         feedback = Feedback.objects.create(
             student=student,
             emoji=request.POST.get("emoji"),
             message=request.POST.get("message"),
+            is_anonymous=is_anonymous,
         )
         return HttpResponseRedirect(reverse_lazy("thank-you"))
 
