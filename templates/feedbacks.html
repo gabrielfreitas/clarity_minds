@@ -50,7 +50,7 @@ Olá {{ request.user.first_name }}!
       </div>
     </div>
     <div class="comments">
-      <h5>Lista de feedbacks - {{ start_date|date:"d/M/Y" }}</h5>
+      <h5>Lista de feedbacks - {{ start_date|date:"d/M/Y" }} - Turma: {{ school_class }}</h5>
       {% for obj in object_list %}
         <div class="card" style="width: 100%; margin-bottom: 1rem">
           <div class="card-header">

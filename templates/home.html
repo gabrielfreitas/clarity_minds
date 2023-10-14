@@ -4,7 +4,7 @@
   <a href="{% url 'login' %}"><button type="button" class="btn btn-primary">Entrar como professor</button></a>
 {% else %}
   Olá {{ request.user.first_name }}!
-  <a href="{% url 'login' %}">
+  <a href="{% url 'logout' %}">
     <button type="button" class="btn btn-primary">Sair</button>
   </a>
 {% endif %}
