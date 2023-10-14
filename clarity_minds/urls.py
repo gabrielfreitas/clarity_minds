@@ -18,15 +18,21 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
 from . import views
-from apps.feedback.views import FeedbackCreateView, FeedbackListView
+from apps.feedback.views import (
+    FeedbackCreateView,
+    FeedbackListView,
+    SchoolClassListView,
+)
 
 urlpatterns = [
     path("", FeedbackCreateView.as_view(), name="home"),
-    path("feedbacks/", FeedbackListView.as_view(), name="feedbacks"),
+    path("schools-classes/", SchoolClassListView.as_view(), name="schools-classes"),
+    path("feedbacks/<int:pk>/", FeedbackListView.as_view(), name="feedback-detail"),
     path("admin/", admin.site.urls),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("", include("apps.users.urls")),
     path("api/", include("apps.feedback.urls")),
-    path("login/", views.login),
+    # path("login/", views.login), # é utilizado o do modulo users
     path(
         "thank-you/",
         TemplateView.as_view(template_name="thank-you.html"),
