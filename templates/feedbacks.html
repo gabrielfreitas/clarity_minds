@@ -54,12 +54,12 @@ Olá {{ request.user.first_name }}!
       {% for obj in object_list %}
         <div class="card" style="width: 100%; margin-bottom: 1rem">
           <div class="card-header">
-            {{ obj.get_emoji_display }} - por {% if obj.is_anonymous %}Anônimo{% else %}{{ obj.student.name }}{% endif %}
+            {{ obj.get_emoji_display }}
           </div>
           <div class="card-body">
             <blockquote class="blockquote mb-0">
               <p>{{ obj.message }}</p>
-              <p style="font-size: 0.8rem;">{{ obj.created_at }}</p>
+              <p style="font-size: 0.8rem;">{{ obj.created_at }} - por {% if obj.is_anonymous %}Anônimo{% else %}{{ obj.student.name }}{% endif %}</p>
             </blockquote>
           </div>
         </div>
