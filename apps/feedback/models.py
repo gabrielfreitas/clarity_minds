@@ -13,6 +13,7 @@ EMOJI_CHOICES = (
     ("😡", "😡 - Raiva"),
 )
 
+
 class Feedback(DefaultModel):
     student = models.ForeignKey(
         "core.Student",
@@ -22,6 +23,7 @@ class Feedback(DefaultModel):
     )
     emoji = models.CharField("Emoji", choices=EMOJI_CHOICES, max_length=255)
     message = models.TextField("Mensagem")
+    is_anonymous = models.BooleanField("Anônimo", default=True)
 
     def __str__(self):
         return f"{self.student.name} em {self.created_at.strftime('%d/%m/%Y')}"
