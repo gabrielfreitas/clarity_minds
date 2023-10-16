@@ -63,6 +63,8 @@ class SchoolClassListView(ListView):
             self.start_date = datetime.strptime(start_date_param, "%Y-%m-%d")
         else:
             self.start_date = datetime.now().date()
+        if self.request.user.is_superuser:
+            return SchoolClass.objects.all()
         try:
             teacher = Teacher.objects.get(user=self.request.user)
         except Teacher.DoesNotExist:
@@ -90,14 +92,14 @@ class FeedbackListView(ListView):
             self.start_date = datetime.strptime(start_date_param, "%Y-%m-%d")
         else:
             self.start_date = datetime.now().date()
-        try:
-            teacher = Teacher.objects.get(user=self.request.user)
-        except Teacher.DoesNotExist:
-            return render(
-                self.request,
-                "feedback-error.html",
-                {"message": "Professor não encontrado!"},
-            )
+        # try:
+        #     teacher = Teacher.objects.get(user=self.request.user)
+        # except Teacher.DoesNotExist:
+        #     return render(
+        #         self.request,
+        #         "feedback-error.html",
+        #         {"message": "Professor não encontrado!"},
+        #     )
         return (
             Feedback.objects.filter(
                 student__school_class=self.kwargs["pk"],
