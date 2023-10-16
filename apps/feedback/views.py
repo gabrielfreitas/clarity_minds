@@ -106,7 +106,7 @@ class FeedbackListView(ListView):
                 created_at__date=self.start_date,
             )
             .annotate(total=Count("emoji"))
-            .order_by("-total")
+            .order_by("-created_at")
         )
 
     def get_context_data(self, **kwargs):
